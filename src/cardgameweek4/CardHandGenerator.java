@@ -18,7 +18,7 @@ public class CardHandGenerator {
      * Generates a hand of a given size
      */
     public static Card[] generateHand(int handSize) {
-        
+        // test
         // we'll use this to generate random numbers
         Random random = new Random();
         
