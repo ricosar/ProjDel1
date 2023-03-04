@@ -8,27 +8,44 @@ package cardgameweek4;
  */
 public class Card {
 
-    public enum Suit {
-        HEARTS, CLUBS, SPADES, DIAMONDS
-    }
+   private String suit; 
+   private String playerName;
 
-    public enum Value {
-        ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-    }
+   public Card(String newSuit, String newPlayerName){
+       setSuit(newSuit);
+       setPlayerName(newPlayerName);
     
-    private final Suit suit;
-    private final Value value;
+   }
+   public Card(){
+       this("","");
+   }
+    /**
+     * @return the suit
+     */
+    public String getSuit() {
+        return suit;
+    }
 
-    public Card(Suit suit, Value value) {
+    /**
+     * @param suit the suit to set
+     */
+    public void setSuit(String suit) {
         this.suit = suit;
-        this.value = value;
+    }
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public Value getValue() {
-        return this.value;
+    /**
+     * @param suit the suit to set
+     */
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
-    public Suit getSuit() {
-        return this.suit;
-    }
+    /**
+     * @return the value
+     */
+  
 }
+
