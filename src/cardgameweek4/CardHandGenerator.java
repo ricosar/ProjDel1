@@ -1,4 +1,4 @@
-package cardgameweek4;
+/* package cardgameweek4;
 
 import cardgameweek4.Card.Suit;
 import cardgameweek4.Card.Value;
@@ -11,13 +11,13 @@ import java.util.Random;
  * @author dancye, 2019.
  * @modified Paul Bonenfant Feb 2022
  */
-
+/*
 public class CardHandGenerator {
-
+*/
     /**
      * Generates a hand of a given size
      */
-    public static Card[] generateHand(int handSize) {
+   /* public static Card[] generateHand(int handSize) {
         // test
         // we'll use this to generate random numbers
         Random random = new Random();
@@ -44,4 +44,6 @@ public class CardHandGenerator {
         
         return hand;
     }
-}
+} 
+*/
+
