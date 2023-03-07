@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Card {
      
     private int cardNum;
-    private int player1Score = 0;
-    private int player2Score = 0;
+    private int playerScore = 0;
+    private int computerScore = 0;
     final static String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
     final static String[] ranks = {"2", "3","4","5","6","7","8", "9","10", "Jack", "Queen", "King", "Ace"};
  
