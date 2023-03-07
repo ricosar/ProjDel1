@@ -22,6 +22,7 @@ public class Deck {
 
     }
 
+    //Shuffles deck
     public void shuffle() {
 
         topCard = 0;
