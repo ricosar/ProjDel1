@@ -1,34 +1,48 @@
 package cardgameweek4;
 
+
+import java.util.ArrayList;
+
 /**
  * Starter code for the Card class. To be used in Week 4.
  *
- * @author dancye, 2019
- * @modified Paul Bonenfant Feb 2022
+ * @Max Matthews
  */
+
+
 public class Card {
-
-    public enum Suit {
-        HEARTS, CLUBS, SPADES, DIAMONDS
-    }
-
-    public enum Value {
-        ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-    }
-    
-    private final Suit suit;
-    private final Value value;
-
-    public Card(Suit suit, Value value) {
-        this.suit = suit;
-        this.value = value;
-    }
-
-    public Value getValue() {
-        return this.value;
-    }
-
-    public Suit getSuit() {
-        return this.suit;
-    }
-}
+     
+    private int cardNum;
+    private int player1Score = 0;
+    private int player2Score = 0;
+    final static String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
+    final static String[] ranks = {"2", "3","4","5","6","7","8", "9","10", "Jack", "Queen", "King", "Ace"};
+ 
+     Card (int theCard) {
+         setCardNum (theCard);
+     }
+ 
+     public void setCardNum (int theCard) {
+         cardNum = (theCard >= 0 && theCard <= 51)? theCard: 0;
+     }
+ 
+     public int getCardNum() {
+         return cardNum;
+     }
+ 
+     public String toString() {
+         return ranks[cardNum%13] + " of " + suits[cardNum/13];
+     }
+ 
+     public String getSuit() {
+         return suits[cardNum/13];
+     }
+ 
+     public String getRank() {
+         return ranks[cardNum%13];
+     }
+ 
+     public int getValue() {
+         return cardNum%13;
+     } 
+ }
