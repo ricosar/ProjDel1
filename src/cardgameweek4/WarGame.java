@@ -20,7 +20,7 @@ public class WarGame {
     }
     
     // the hands of both players
-    final private ArrayList<Card>[] hands;
+    private ArrayList<Card>[] hands;
 
     /**
      * Constructor for the War class
@@ -35,6 +35,8 @@ public class WarGame {
      * @return the winning player of the round
      */
     public int playRound() {
+        int playerScore = 0;
+        int computerScore = 0;
         
         // get the top card from each player's hand
         Card player1Card = hands[0].remove(0);
@@ -42,15 +44,20 @@ public class WarGame {
 
         // determine the winner of the round
         int result = player1Card.compareTo(player2Card);
-
-        if (result > 0) {
-            playerWins();
+        
+       boolean value = true;
+        
+        while(value == true){
+         if (result > 0) {
+            System.out.print("Player wins!");
+            playerScore++;
             // player 1 wins the round
             hands[0].add(player1Card);
             hands[0].add(player2Card);
             return 1;
         } else if (result < 0) {
-            computerWins();
+            System.out.print("Computer wins!");
+            computerScore++;
             // player 2 wins the round
             hands[1].add(player2Card);
             hands[1].add(player1Card);
@@ -59,12 +66,14 @@ public class WarGame {
             // it's a tie
             // for simplicity, we will not implement a tiebreaker
             // and just return player 1 as the winner
+            System.out.print("Its a tie!");
             hands[0].add(player1Card);
             hands[1].add(player2Card);
-            return 1;
+            return 0;
         }
     }
-
+    }
+    
     /**
      * Plays the entire game of War
      *

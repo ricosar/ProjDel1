@@ -26,13 +26,6 @@ public class Card implements Comparable <Card> {
     private final Value value;
     
     //scores
-    private int playerScore = 0;
-    private int computerScore = 0;
-    
-    public Card(){
-
-    }
-
     public Card(Suit suit, Value value) {
         this.suit = suit;
         this.value = value;
@@ -44,14 +37,6 @@ public class Card implements Comparable <Card> {
 
     public Suit getSuit() {
         return this.suit;
-    }
-    
-    public int computerWins(){
-        return computerScore++;
-    }
-    
-    public int playerWins(){
-        return playerScore++;
     }
 
    @Override
