@@ -30,11 +30,11 @@ public class WarGame {
         int player2 = hands[1][0].getValue();
 
         if (player1 > player2) {
-            System.out.println("Player One Wins The War");
-            player1Score++;
+            System.out.println("Player Wins The War");
+            playerScore++;
         } else if (player2 > player1) {
-            System.out.println("Player Two Wins The War");
-            player2Score++;
+            System.out.println("Computer Wins The War");
+            computerScore++;
         } else {
             System.out.println("The War Is A Tie");
         }
