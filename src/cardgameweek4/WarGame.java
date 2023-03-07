@@ -13,6 +13,7 @@ public class WarGame {
     public static void main(String[] args){
         Card[][] hands = new Card[2][1];
         Deck myDeck = new Deck();
+        myDeck.shuffle();
 
     //reduced this to 26 iterations because two cards are dealt each iteration
         for (int i = 0; i < 26; i++) {
@@ -26,15 +27,14 @@ public class WarGame {
             printHand(hands[player]);
         }
 
-        int player1 = hands[0][0].getValue(); //get the value from the Card object
+    //get the value from the Card object
+        int player1 = hands[0][0].getValue();
         int player2 = hands[1][0].getValue();
 
         if (player1 > player2) {
             System.out.println("Player Wins The War");
-            playerScore++;
         } else if (player2 > player1) {
             System.out.println("Computer Wins The War");
-            computerScore++;
         } else {
             System.out.println("The War Is A Tie");
         }
