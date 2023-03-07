@@ -1,12 +1,20 @@
 package cardgameweek4;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 /**
  * Represents a game of War
  */
 public class WarGame {
     public static void main(String[] args){
+        //creating scanner object
+        Scanner input = new Scanner(System.in);
         
+        //asking user for name
+        System.out.print("Enter your name: ");
+        String name = input.next();
+        
+        //calling the object
         WarGame test = new WarGame();
         System.out.print(test.playRound());
     }
@@ -27,6 +35,7 @@ public class WarGame {
      * @return the winning player of the round
      */
     public int playRound() {
+        
         // get the top card from each player's hand
         Card player1Card = hands[0].remove(0);
         Card player2Card = hands[1].remove(0);
@@ -35,11 +44,13 @@ public class WarGame {
         int result = player1Card.compareTo(player2Card);
 
         if (result > 0) {
+            playerWins();
             // player 1 wins the round
             hands[0].add(player1Card);
             hands[0].add(player2Card);
             return 1;
         } else if (result < 0) {
+            computerWins();
             // player 2 wins the round
             hands[1].add(player2Card);
             hands[1].add(player1Card);

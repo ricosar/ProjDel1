@@ -1,4 +1,6 @@
 package cardgameweek4;
+
+
 import java.util.ArrayList;
 
 /**
@@ -7,9 +9,9 @@ import java.util.ArrayList;
  * @author dancye, 2019
  * @modified Paul Bonenfant Feb 2022
  */
-public class Card implements Comparable <Card> {
 
-     private int cardsLeft;
+
+public class Card implements Comparable <Card> {
      
     public enum Suit {
         HEARTS, CLUBS, SPADES, DIAMONDS
@@ -19,9 +21,17 @@ public class Card implements Comparable <Card> {
         ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
     }
     
+    //suit and value
     private final Suit suit;
     private final Value value;
     
+    //scores
+    private int playerScore = 0;
+    private int computerScore = 0;
+    
+    public Card(){
+
+    }
 
     public Card(Suit suit, Value value) {
         this.suit = suit;
@@ -36,13 +46,12 @@ public class Card implements Comparable <Card> {
         return this.suit;
     }
     
-    public void playWar(ArrayList<Card>[] hands) {
-        // initialize the number of cards left to the size of the hands array
-        cardsLeft = hands[0].size();
+    public int computerWins(){
+        return computerScore++;
     }
     
-    public void cardsLeft(){
-        System.out.print("There are " + cardsLeft);
+    public int playerWins(){
+        return playerScore++;
     }
 
    @Override
