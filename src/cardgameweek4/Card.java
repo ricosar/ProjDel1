@@ -24,6 +24,10 @@ public class Card implements Comparable <Card> {
     //suit and value
     private final Suit suit;
     private final Value value;
+    private static int playerSize = 26;
+    private static int computerSize = 26;
+    private static int computerScore = 0;
+    private static int playerScore = 0;
     
     //scores
     public Card(Suit suit, Value value) {
@@ -38,10 +42,37 @@ public class Card implements Comparable <Card> {
     public Suit getSuit() {
         return this.suit;
     }
-
-   @Override
+    
+    public static int playerSize(){
+        return playerSize--;
+    }
+    
+    public static int computerSize(){
+        return computerSize--;
+    }
+    
+    public static int computerScore(){
+        int score = computerScore + 1;
+        return score;
+    }
+    
+    public static int playerScore(){
+        int score = playerScore + 1;
+        return score;
+    }
+    
+    public static String stringScore(){
+        return String.format("%s%d%n%s%d", "The computer score is: ", computerScore(),
+                "The player score is: ", playerScore());
+    }
+    
+     @Override
     public int compareTo(Card otherCard) {
         return this.value.compareTo(otherCard.getValue());
     }
-}
+    
+    }
+
+  
+
 
