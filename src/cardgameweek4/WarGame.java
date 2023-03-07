@@ -48,30 +48,30 @@ public class WarGame {
        boolean value = true;
         
         while(value == true){
-         if (result > 0) {
-            System.out.print("Player wins!");
-            playerScore++;
-            // player 1 wins the round
-            hands[0].add(player1Card);
-            hands[0].add(player2Card);
-            return 1;
-        } else if (result < 0) {
-            System.out.print("Computer wins!");
-            computerScore++;
-            // player 2 wins the round
-            hands[1].add(player2Card);
-            hands[1].add(player1Card);
-            return 2;
-        } else {
-            // it's a tie
-            // for simplicity, we will not implement a tiebreaker
-            // and just return player 1 as the winner
-            System.out.print("Its a tie!");
-            hands[0].add(player1Card);
-            hands[1].add(player2Card);
-            return 0;
+            if (result > 0) {
+                System.out.print("Player wins!");
+                playerScore++;
+                // player 1 wins the round
+                hands[0].add(player1Card);
+                hands[0].add(player2Card);
+                return 1;
+            } else if (result < 0) {
+                System.out.print("Computer wins!");
+                computerScore++;
+                // player 2 wins the round
+                hands[1].add(player2Card);
+                hands[1].add(player1Card);
+                return 2;
+            } else {
+                // it's a tie
+                // for simplicity, we will not implement a tiebreaker
+                // and just return player 1 as the winner
+                System.out.print("Its a tie!");
+                hands[0].add(player1Card);
+                hands[1].add(player2Card);
+                return 0;
+            }
         }
-    }
     }
     
     /**
