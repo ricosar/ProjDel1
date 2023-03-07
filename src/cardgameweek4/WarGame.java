@@ -14,7 +14,11 @@ public class WarGame {
         Card[][] hands = new Card[2][1];
         Deck myDeck = new Deck();
         myDeck.shuffle();
-
+        
+        
+        int playerScore = 0;
+        int computerScore = 0;
+        
     //reduced this to 26 iterations because two cards are dealt each iteration
         for (int i = 0; i < 26; i++) {
             System.out.printf("\n Round %s of The War \n", i);
@@ -33,10 +37,17 @@ public class WarGame {
 
         if (player1 > player2) {
             System.out.println("Player Wins The War");
+            System.out.println("The score for computer is: " + computerScore);
+            System.out.println("The score for player is: " + ++playerScore);
+                
         } else if (player2 > player1) {
             System.out.println("Computer Wins The War");
+            System.out.println("The score for computer is: " + ++computerScore);
+            System.out.println("The score for player is: " + playerScore);
         } else {
             System.out.println("The War Is A Tie");
+            System.out.println("The score for computer is: " + computerScore);
+            System.out.println("The score for player is: " + playerScore);
         }
 
     }
