@@ -10,53 +10,73 @@ import java.util.Scanner;
  * Represents a game of War
  */
 public class WarGame {
-    public static void main(String[] args){
-        Card[][] hands = new Card[2][1];
-        Deck myDeck = new Deck();
-        myDeck.shuffle();
-        
-        
-        int playerScore = 0;
-        int computerScore = 0;
-        
-    //reduced this to 26 iterations because two cards are dealt each iteration
-        for (int i = 0; i < 26; i++) {
-            System.out.printf("\n Round %s of The War \n", i);
-            for (int player = 0; player < hands.length; player++)
-                hands[player][0] = myDeck.dealCard();
-            
+    public static void main(String[] args) {
 
-        for (int player = 0; player < hands.length; player++) {
-            System.out.printf("Player %d: ", player);
-            printHand(hands[player]);
+        ArrayList<Card> deck = Card.generateDeck();
+        ArrayList<Card> Player1 = new ArrayList<>();
+        ArrayList<Card> Computer = new ArrayList<>();
+        ArrayList<Card> table = new ArrayList<>();
+
+//dealing hands
+        while (!deck.isEmpty()) {
+            Player1.add(deck.get(0));
+            deck.remove(0);
+            Computer.add(deck.get(0));
+            deck.remove(0);
         }
 
-    //get the value from the Card object
-        int player1 = hands[0][0].getValue();
-        int player2 = hands[1][0].getValue();
+        while (!Player1.isEmpty() && !Computer.isEmpty()) {
+            System.out.println("Player Score: " + Player1.size() + " Computer Score" + Computer.size());
+            System.out.println("Player: " + Player1.get(Player1.size() - 1));
+            System.out.println("Computer: " + Computer.get(Computer.size() - 1));
+            table.add(0,Player1.get(Player1.size() - 1));
+            table.add(0,Computer.get(Computer.size() - 1));
+            Player1.remove(Player1.get(Player1.size() - 1));
+            Computer.remove(Computer.get(Computer.size() - 1));
 
-        if (player1 > player2) {
-            System.out.println("Player Wins The War");
-            System.out.println("The score for computer is: " + computerScore);
-            System.out.println("The score for player is: " + ++playerScore);
-                
-        } else if (player2 > player1) {
-            System.out.println("Computer Wins The War");
-            System.out.println("The score for computer is: " + ++computerScore);
-            System.out.println("The score for player is: " + playerScore);
-        } else {
-            System.out.println("The War Is A Tie");
-            System.out.println("The score for computer is: " + computerScore);
-            System.out.println("The score for player is: " + playerScore);
+            if (Player1.isEmpty()) {
+                System.out.println("Computer wins");
+                return;
+            }
+            if (Computer.isEmpty())  {
+                System.out.println("Player wins");
+                return;
+            }
+
+            if (table.get(0).value > table.get(1).value) {
+                Player1.addAll(0, table);
+                table.removeAll(table);
+            }
+            else if (table.get(0).value < table.get(1).value) {
+                Computer.addAll(0, table);
+                table.removeAll(table);
+            }
+
+
+            if (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value) {
+                System.out.println("WAR!!!!!!");
+                for (int i = 0; i < 2; i++) {
+                    table.add(Player1.get(Player1.size() - 1));
+                    table.add(Computer.get(Computer.size() - 1));
+                    Player1.remove(Player1.get(Player1.size() - 1));
+                    Computer.remove(Computer.get(Computer.size() - 1));
+                    if (Player1.isEmpty()) {
+                        System.out.println("Computer wins");
+                        return;
+                    }
+                    if (Computer.isEmpty())  {
+                        System.out.println("Player wins");
+                        return;
+                    }
+                    if (table.get(table.size() - 1).value > table.get(table.size() - 2).value) {
+                        Player1.addAll(0, table);
+                        table.removeAll(table);
+                    } else if (table.get(table.size() - 1).value < table.get(table.size() - 2).value) {
+                        Computer.addAll(0, table);
+                        table.removeAll(table);
+                    }
+                }
+            }
         }
-
     }
-    }
-    public static void printHand(Card[] hand) {
-
-    for (int card = 0; card < hand.length; card++)
-        System.out.printf("%s", hand[card].toString());
-
-        System.out.println();
-    } 
 }
