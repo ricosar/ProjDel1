@@ -38,12 +38,12 @@ public class WarGame {
                 System.out.println("Computer wins");
                 return;
             }
-            if (Computer.isEmpty()) {
+            else if (Computer.isEmpty()) {
                 System.out.println("Player wins");
                 return;
             }
 
-            if (table.get(0).value > table.get(1).value) {
+            else if (table.get(0).value > table.get(1).value) {
                 Player1.addAll(0, table);
                 table.clear();
             }
@@ -53,9 +53,9 @@ public class WarGame {
             }
 
 
-            if (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value) {
+            else if (table.get(table.size() - 1).value == table.get(table.size() - 2).value) {
                 System.out.println("WAR!!!!!!");
-                while (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value){
+
                 for (int i = 0; i < 2; i++) {
                     table.add(Player1.get(Player1.size() - 1));
                     table.add(Computer.get(Computer.size() - 1));
@@ -84,4 +84,4 @@ public class WarGame {
         }
     }
 
-}}
+}
