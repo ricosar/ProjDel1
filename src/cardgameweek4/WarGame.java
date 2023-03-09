@@ -29,8 +29,8 @@ public class WarGame {
             System.out.println("Player Score: " + Player1.size() + " Computer Score" + Computer.size());
             System.out.println("Player: " + Player1.get(Player1.size() - 1));
             System.out.println("Computer: " + Computer.get(Computer.size() - 1));
-            table.add(0,Player1.get(Player1.size() - 1));
-            table.add(0,Computer.get(Computer.size() - 1));
+            table.add(Player1.get(Player1.size() - 1));
+            table.add(Computer.get(Computer.size() - 1));
             Player1.remove(Player1.get(Player1.size() - 1));
             Computer.remove(Computer.get(Computer.size() - 1));
 
@@ -38,22 +38,22 @@ public class WarGame {
                 System.out.println("Computer wins");
                 return;
             }
-            if (Computer.isEmpty())  {
+            if (Computer.isEmpty()) {
                 System.out.println("Player wins");
                 return;
             }
 
             if (table.get(0).value > table.get(1).value) {
                 Player1.addAll(0, table);
-                table.removeAll(table);
+                table.clear();
             }
             else if (table.get(0).value < table.get(1).value) {
                 Computer.addAll(0, table);
-                table.removeAll(table);
+                table.clear();
             }
 
 
-            if (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value) {
+            else if (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value) {
                 System.out.println("WAR!!!!!!");
                 for (int i = 0; i < 2; i++) {
                     table.add(Player1.get(Player1.size() - 1));
@@ -64,19 +64,21 @@ public class WarGame {
                         System.out.println("Computer wins");
                         return;
                     }
-                    if (Computer.isEmpty())  {
+                    if (Computer.isEmpty()) {
                         System.out.println("Player wins");
                         return;
                     }
-                    if (table.get(table.size() - 1).value > table.get(table.size() - 2).value) {
-                        Player1.addAll(0, table);
-                        table.removeAll(table);
-                    } else if (table.get(table.size() - 1).value < table.get(table.size() - 2).value) {
-                        Computer.addAll(0, table);
-                        table.removeAll(table);
-                    }
+                }
+                if (table.get(table.size() - 1).value > table.get(table.size() - 2).value) {
+                    Player1.addAll(0, table);
+                    table.clear();
+                } else if (table.get(table.size() - 1).value < table.get(table.size() - 2).value) {
+                    Computer.addAll(0, table);
+                    table.clear();
+
                 }
             }
         }
     }
+
 }

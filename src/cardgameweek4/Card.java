@@ -64,12 +64,11 @@ public class Card {
     //the generateDeck method could be used to generate a deck for any card game by changing the values for Ranks and Colors
     public static ArrayList<Card> generateDeck() {
         ArrayList<Card> deck = new ArrayList<>();
-        int k = 0;
         for (int i = 0; i < SUITS.values().length; i++) {
             for (int j = 0; j < RANKS.values().length; j++) {
 
                 deck.add(new Card(SUITS.values()[i], RANKS.values()[j], j));
-                k++;
+
             }
         }
         Collections.shuffle(deck);
