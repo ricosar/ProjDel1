@@ -53,8 +53,9 @@ public class WarGame {
             }
 
 
-            else if (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value) {
+            if (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value) {
                 System.out.println("WAR!!!!!!");
+                while (Player1.get(Player1.size() - 1).value == Computer.get(Computer.size() - 1).value){
                 for (int i = 0; i < 2; i++) {
                     table.add(Player1.get(Player1.size() - 1));
                     table.add(Computer.get(Computer.size() - 1));
@@ -72,13 +73,15 @@ public class WarGame {
                 if (table.get(table.size() - 1).value > table.get(table.size() - 2).value) {
                     Player1.addAll(0, table);
                     table.clear();
-                } else if (table.get(table.size() - 1).value < table.get(table.size() - 2).value) {
+                }
+                else if (table.get(table.size() - 1).value < table.get(table.size() - 2).value) {
                     Computer.addAll(0, table);
                     table.clear();
-
                 }
+
+
             }
         }
     }
 
-}
+}}
