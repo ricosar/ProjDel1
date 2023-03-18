@@ -15,7 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 
-public class Project extends Application{
+public class GameStore extends Application{
 
     @Override
     public void start(Stage primaryStage){
