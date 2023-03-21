@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -41,6 +42,8 @@ public class Project extends Application {
         TextField searchInput = new TextField();
         Button searchButton = new Button("Search");
 
+
+        //creates an event
         searchButton.setOnAction(event -> searchGame(searchInput.getText()));
         searchResultLabel = new Label();
         gameListView = new ListView<>();
@@ -56,14 +59,29 @@ public class Project extends Application {
         addGrid.add(addButton, 0, 3);
         addGrid.add(deleteButton, 1, 3);
 
+        //creates Vbox for labels to be vertical.
         VBox searchBox = new VBox(10, searchLabel, searchInput, searchButton, searchResultLabel);
-        
+
+        //aligns the box in the center
         searchBox.setAlignment(Pos.CENTER);
+
+        //creates Vbox and Hbox 
         VBox gameListLayout = new VBox(10, new Label("Game List"), gameListView);
         gameListLayout.setAlignment(Pos.CENTER_LEFT);
+
         HBox layout = new HBox(20, addGrid, gameListLayout, searchBox);
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
+
+        //creates image
+        ImageView imageView = new ImageView("image/game.gif");
+        // Set the size of the image view
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+        // Add the image view to the layout
+        layout.getChildren().add(imageView);
+
+
 
         // Create scene and show stage
         Scene scene = new Scene(layout, 800, 300);
@@ -106,11 +124,14 @@ public class Project extends Application {
                 searchResultLabel.setText("Name: " + game.getName() +
                         "\nCompany: " + game.getCompany() +
                         "\nDate: " + game.getDate());
+                return;
             }
         }
-        searchResultLabel.setText("No matching game found."); //if no game was found
+        // If the loop completes without returning, the game was not found
+        searchResultLabel.setText("No matching game found.");
     }
 
+    
     //updates the gamelist box
     private void updateGameList() {
         // Sort the game list by name
@@ -159,5 +180,4 @@ class Game {
     }
 
 }
-
 
