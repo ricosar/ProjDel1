@@ -1,3 +1,4 @@
+
 //*Max Matthews, Sarah Rico */
 
 
@@ -7,11 +8,24 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+//import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +36,8 @@ import java.util.List;
 public class Project extends Application {
 
 //creates the gameList array.
-    private ArrayList<Game> gameList = new ArrayList<>();
+private ArrayList<Game> gameList = new ArrayList<>();
+ListView<Game> gameLists = new ListView<>();
 
 
 //private datafields initalized to be used in the program.
@@ -36,6 +51,8 @@ public class Project extends Application {
     @Override
     public void start(Stage primaryStage){
         // Create UI components and labels for the application
+
+        GameList list = new GameList();
 
         //Game name
         Label nameLabel = new Label("Game Name:");
@@ -53,7 +70,45 @@ public class Project extends Application {
         Label stockLabel = new Label("# in stock:");
         stockInput = new TextField();
 
-        //Genres
+       // Spinner<Game> stockSpinner = new Spinner<>(0.0,99.99,0.0);
+
+       
+    //Add button that points the event to the addGame method.
+        Button addButton = new Button("Add");
+        addButton.setOnAction(event -> addGame());
+
+    //Delete button that points the event to the deleteGame method.
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(event -> deleteGame());
+
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(event -> editGame());
+            
+
+    /* Search button is created. The event is pointed to the searchgame method. 
+    The action also passes getText as a parameter.
+    */
+        Label searchLabel = new Label("Search:");
+        TextField searchInput = new TextField();
+        Button searchButton = new Button("Search");
+        searchButton.setOnAction(event -> searchGame(searchInput.getText()));
+
+
+    
+    //  Created a new label for the search results.
+        searchResultLabel = new Label();
+
+   // A ListView is a UI control that displays a list of items in a vertical scrollable list. 
+        gameListView = new ListView<>();
+
+        // Add components to layout by adding it to a GridPane.
+        GridPane addGrid = new GridPane();
+
+        //setting the distance between buttons.
+        addGrid.setVgap(20);
+        addGrid.setHgap(20);
+
+        // Genre
         Label releaseLabel = new Label("Genre:");
         ComboBox<String> releaseComboBox = new ComboBox<>();
         releaseComboBox.getItems().addAll("Horror", "Action", "Mystery", "Platformer", "FPS",
@@ -66,56 +121,39 @@ public class Project extends Application {
         consoleComboBox.getItems().addAll("Playstation", "Xbox", "Nintendo Switch");
         consoleComboBox.setPromptText("Select Console");
 
-    //Add button that points the event to the addGame method.
-        Button addButton = new Button("Add");
-        addButton.setOnAction(event -> addGame());
-
-    //Delete button that points the event to the deleteGame method.
-        Button deleteButton = new Button("Delete");
-        deleteButton.setOnAction(event -> deleteGame());
-    
-
-    /* Search button is created. The event is pointed to the searchgame method. 
-    The action also passes getText as a parameter.
-    */
-        Label searchLabel = new Label("Search:");
-        TextField searchInput = new TextField();
-        Button searchButton = new Button("Search");
-        searchButton.setOnAction(event -> searchGame(searchInput.getText()));
+         //Number of players
+         Label playerLabel = new Label("Number of Players:");
+         ComboBox<String> playerComboBox = new ComboBox<>();
+         playerComboBox.getItems().addAll("1", "2", "3", "4", "5+");
+         playerComboBox.setPromptText("players");
 
 
-    /*
-    Created a new label for the search results.
-
-    A ListView is a UI control that displays a list of items
-    in a vertical scrollable list. We will use this to store the games in.
-
-    */
-        searchResultLabel = new Label();
-        gameListView = new ListView<>();
-
+         //text to welcome the employee :)
+        Text welcome = new Text(20, 20, "Welcome to the database, Gamestop employee!");
+        welcome.setFont(Font.font("Courier", FontWeight.BOLD, 
+          FontPosture.ITALIC, 15));
+       
         
-        // Add components to layout by adding it to a GridPane.
-        GridPane addGrid = new GridPane();
-
-        //setting the distance between buttons.
-        addGrid.setVgap(10);
-        addGrid.setHgap(10);
 
         //adding the rows and formatting them.
         addGrid.addRow(0, nameLabel, nameInput);
         addGrid.addRow(1, companyLabel, companyInput);
-        addGrid.addRow(2, dateLabel, dateInput);
-        addGrid.addRow(3, releaseLabel, releaseComboBox);
-        addGrid.addRow(4, consoleLabel, consoleComboBox);
-        addGrid.addRow(5, stockLabel, stockInput);
-
+        addGrid.addRow(2, dateLabel, dateInput); 
+        addGrid.addRow(3, stockLabel, stockInput);
+        addGrid.addRow(4, releaseLabel, releaseComboBox);
+        addGrid.addRow(5, consoleLabel, consoleComboBox);
+        addGrid.addRow(6, playerLabel, playerComboBox);
+       
+    
         //adds the add and delete button to the grid and positions them.
-        addGrid.add(addButton, 0, 8);
-        addGrid.add(deleteButton, 1, 8);
+        addGrid.add(addButton, 0, 10);
+        addGrid.add(deleteButton, 1, 10);
+        addGrid.add(editButton, 2, 10);
+
+     
 
         //creates Vbox for labels to be vertical.
-        VBox searchBox = new VBox(10, searchLabel, searchInput, searchButton, searchResultLabel);
+        VBox searchBox = new VBox(10, welcome, searchLabel, searchInput, searchButton, searchResultLabel);
 
         //aligns the searchbox in the center.
         searchBox.setAlignment(Pos.CENTER);
@@ -133,15 +171,14 @@ public class Project extends Application {
         ImageView imageView = new ImageView("image/game.gif");
 
         // Set the size of the imageView.
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(150);
 
         // Add the imageView to the HBox layout
         layout.getChildren().add(imageView);
 
-
         // Create scene and show stage
-        Scene scene = new Scene(layout, 900, 400);
+        Scene scene = new Scene(layout, 1200, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Game Database");
         primaryStage.show();
@@ -149,33 +186,51 @@ public class Project extends Application {
 
     //adding a game to the database
     private void addGame() {
+
         //retrieves the name, company, date, console, and stock.
         String name = nameInput.getText();
         String company = companyInput.getText();
         LocalDate date = dateInput.getValue();
-        String console = stockInput.getValue();
+        String stock = stockInput.getText();
+        // String console = consoleComboBox.getText();
         //etc...
-
+    
         //initalizes a game class object.
-        Game game = new Game(name, company, company, date, 0);
-
+        Game game = new Game(name, company, company, date, "", stock, "");
+    
         // Adds the game to the gameList.
         gameList.add(game);
-
+    
         // Clears it so new values can be added.
         nameInput.clear();
         companyInput.clear();
         dateInput.setValue(null);
-
+    
         // Calls updateGameList method.
         updateGameList();
+    
+        try {
+            // create a PrintWriter object with a filename of "games.txt" to append to the file
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("games.txt", true)));
+    
+            // write the game information to the file
+            pw.println(game.toString());
+    
+            // close the PrintWriter object
+            pw.close();
+    
+        } catch (IOException e) {
+            System.out.println("Error writing to file.");
+        }
     }
+    
 
     // Deleting a game method (programming for the delete button)
     private void deleteGame() {
 
         // if the selected game is not null, prompt the user if they'd like to delete the game.
         String selectedGameName = gameListView.getSelectionModel().getSelectedItem();
+
         if (selectedGameName != null) {
             // Create confirmation alert
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Delete the game?",
@@ -195,7 +250,64 @@ public class Project extends Application {
         }
     }
 
+    public void editGame() {
+    // Get the selected game from the list
+    String selectedGameNames = gameListView.getSelectionModel().getSelectedItem();
 
+    if (selectedGameNames != null) {
+             // Create a new stage for editing the game
+    Stage editStage = new Stage();
+    editStage.setTitle("Edit Game");
+
+    //creating gridpane
+    GridPane addGrid = new GridPane();
+
+
+    Label nameLabel = new Label("Title");
+        TextField nameSearch = new TextField();
+     
+
+    //Company
+    Label companyLabel = new Label("Company:");
+    TextField companySearch = new TextField();
+
+    //Date of release
+    Label dateLabel = new Label("Release Date:");
+    TextField dateSearch = new TextField();
+
+    //Items in stock
+    Label stockLabel = new Label("# in stock:");
+    TextField stockSearch = new TextField();
+
+     //adding the rows and formatting them.
+     addGrid.addRow(0, nameLabel, nameSearch);
+     addGrid.addRow(1, companyLabel, companySearch);
+     addGrid.addRow(2, dateLabel, dateSearch ); 
+     addGrid.addRow(3, stockLabel, stockSearch);
+    
+
+    // Create a VBox to hold the labels, text fields, and buttons
+    VBox vbox = new VBox(10, nameLabel, nameSearch, companyLabel, companySearch, dateLabel, dateSearch, stockLabel, stockSearch);
+    vbox.setPadding(new Insets(10));
+
+    // Create a new scene for the editing stage
+    Scene editScene = new Scene(vbox);
+
+    // Set the scene and show the editing stage
+    editStage.setScene(editScene);
+    editStage.showAndWait();
+    }else{
+       // If no game is selected, display an error message and return
+       Alert alert = new Alert(AlertType.ERROR);
+       alert.setTitle("Error");
+       alert.setHeaderText("No game selected");
+       alert.setContentText("Please select a game to edit.");
+       alert.showAndWait();
+     
+    }
+    }
+        
+   
     //method to search for a game in search bar
     private void searchGame(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -218,10 +330,11 @@ public class Project extends Application {
             // If matching games is not empty (the ArrayList of matchingGames)
             if (!matchingGames.isEmpty()) {
 
-                //  this code creates a ListView of Game objects, and sets each cell in the list to display the title of the Game object.
+            //  this code creates a ListView of Game objects, and sets each cell in the list to display the title of the Game object.
                 ListView<Game> matchingGamesListView = new ListView<>();
                 matchingGamesListView.getItems().addAll(matchingGames);
-                //how each cell should be displayed.
+
+            // how each cell should be displayed.
                 matchingGamesListView.setCellFactory(param -> new ListCell<Game>() {
                     
                     //Overriding updateItem method..
@@ -248,7 +361,10 @@ public class Project extends Application {
                         VBox gameDetailsLayout = new VBox(10,
                                 new Label("Name: " + selectedGame.getTitle()),
                                 new Label("Company: " + selectedGame.getCompany()),
-                                new Label("Release Year: " + selectedGame.getReleaseDate())
+                                new Label("Release Year: " + selectedGame.getReleaseDate()),
+                                new Label("Amount in Stock: " + selectedGame.getStock()),
+                                new Label("Genre: " + selectedGame.getGenre()),
+                                new Label("Console: " + selectedGame.getConsoles())
                         );
                         gameDetailsLayout.setAlignment(Pos.CENTER);
         
@@ -288,7 +404,6 @@ public class Project extends Application {
             }
         }
     }
-    
 
     // Updates the gamelist box
     private void updateGameList() {
@@ -307,97 +422,4 @@ public class Project extends Application {
         launch(args);
     }
 
-}
-
-// Game class
-class Game {
-
-    // Data fields
-    private String title;
-    private String genre;
-    private String company;
-    private LocalDate releaseDate;
-    private List<String> consoles;
-    private int stock;
-
-    // Constructor that passes all the parameters.
-    public Game(String title, String genre, String company, LocalDate releaseDate, int stock) {
-        this.title = title;
-        this.genre = genre;
-        this.company = company;
-        this.releaseDate = releaseDate;
-        this.stock = stock;
-        this.consoles = new ArrayList<>();
-    }
-
-    // Getter for title
-    public String getTitle() {
-        return title;
-    }
-
-    // Setter the title
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    // Getter for genre
-    public String getGenre() {
-        return genre;
-    }
-
-    // Setter the genre
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    // Getter for company
-    public String getCompany() {
-        return company;
-    }
-
-     // Setter the company
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    // Getter for release date
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-      // Setter the release date
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    // Getter for consoles (returns Arraylist)
-    public List<String> getConsoles() {
-        return consoles;
-    }
-
-    // Setter the consoles (adds a console to the ArrayList)
-    public void addConsole(String console) {
-        consoles.add(console);
-    }
-
-    // Setter the consoles (removes a console from the ArrayList)
-    public void removeConsole(String console) {
-        consoles.remove(console);
-    }
-
-    // Getter for stock
-    public int getStock() {
-        return stock;
-    }
-
-     // Setter for stock
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    // String representation
-    @Override
-    public String toString() {
-        return title + " (" + releaseDate.getYear() + ")";
-    }
 }
