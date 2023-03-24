@@ -1,9 +1,11 @@
-
+package projectfinal;
 //*Max Matthews, Sarah Rico */
 
 
 //All of our imports
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +22,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
+import javafx.scene.control.ComboBox;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,8 +38,7 @@ import java.util.List;
 public class Project extends Application {
 
 //creates the gameList array.
-private ArrayList<Game> gameList = new ArrayList<>();
-ListView<Game> gameLists = new ListView<>();
+ObservableList<Game> gameList = FXCollections.observableArrayList();
 
 
 //private datafields initalized to be used in the program.
@@ -46,6 +47,7 @@ ListView<Game> gameLists = new ListView<>();
     private TextField stockInput;
     private DatePicker dateInput;
     private Label searchResultLabel;
+
     private ListView<String> gameListView;
 
     @Override
@@ -69,6 +71,8 @@ ListView<Game> gameLists = new ListView<>();
         //Items in stock
         Label stockLabel = new Label("# in stock:");
         stockInput = new TextField();
+
+
 
        // Spinner<Game> stockSpinner = new Spinner<>(0.0,99.99,0.0);
 
@@ -192,11 +196,16 @@ ListView<Game> gameLists = new ListView<>();
         String company = companyInput.getText();
         LocalDate date = dateInput.getValue();
         String stock = stockInput.getText();
+
+
+        ComboBox<String> playerComboBox = new ComboBox<>();
+        String selectedValue = playerComboBox.getValue();
+
         // String console = consoleComboBox.getText();
         //etc...
     
         //initalizes a game class object.
-        Game game = new Game(name, company, company, date, "", stock, "");
+        Game game = new Game(name, company, company, date, "", stock, selectedValue);
     
         // Adds the game to the gameList.
         gameList.add(game);
@@ -270,6 +279,7 @@ ListView<Game> gameLists = new ListView<>();
     //Company
     Label companyLabel = new Label("Company:");
     TextField companySearch = new TextField();
+    
 
     //Date of release
     Label dateLabel = new Label("Release Date:");
@@ -287,7 +297,8 @@ ListView<Game> gameLists = new ListView<>();
     
 
     // Create a VBox to hold the labels, text fields, and buttons
-    VBox vbox = new VBox(10, nameLabel, nameSearch, companyLabel, companySearch, dateLabel, dateSearch, stockLabel, stockSearch);
+    VBox vbox = new VBox(10, nameLabel, nameSearch, companyLabel, companySearch, 
+    dateLabel, dateSearch, stockLabel, stockSearch);
     vbox.setPadding(new Insets(10));
 
     // Create a new scene for the editing stage
