@@ -22,79 +22,97 @@ public class PlayGame {
         Deck myDeck = new Deck();
         myDeck.shuffle();
         
-        gameScore(name, hands);
+        //passing into gameScore method
+        gameScore(name, hands, myDeck);
     }
     
-    public void gameScore(String name, Card[][] hands){
-        Deck myDeck = new Deck();
-    //reduced this to 26 iterations because two cards are dealt each iteration
-        for (int i = 0; i < 26; i++) {
-            System.out.printf("\n Round %s of The War \n", i);
-            for (int player = 0; player < hands.length; player++)
-                hands[player][0] = myDeck.dealCard();
-            
-
-        for (int player = 0; player < hands.length; player++) {
-           
-            if(player % 2 == 0){
-                 System.out.print(name + "'s Card: ");
-            }else{
-               System.out.print("Computers card: "); 
-            }
-            
-            printHand(hands);
-        }
-
-    //get the value from the Card object
+    //gameScore Method
+    public void gameScore(String name, Card[][] hands, Deck myDeck) {
+    for (int i = 0; i < 26; i++) {
+        System.out.printf("\n Round %s of The War \n", i + 1);
+        for (int player = 0; player < hands.length; player++)
+            hands[player][0] = myDeck.dealCard();
+        
+        //passes cards into printHand method
+        System.out.print(name + "'s Card: ");
+        printHand(new Card[][] { { hands[0][0] } });
+        System.out.print("Computer's card: ");
+        printHand(new Card[][] { { hands[1][0] } });
+        
+        //Retrieves values
         int player1 = hands[0][0].getValue();
         int player2 = hands[1][0].getValue();
-
+        
         if (player1 > player2) {
             System.out.println("Player Wins The War");
-            System.out.println("The score for computer is: " + computerScore);
-            System.out.println("The score for " + name + " is " + ++playerScore);
-                
+            playerScore++;
         } else if (player2 > player1) {
             System.out.println("Computer Wins The War");
-            System.out.println("The score for computer is: " + ++computerScore);
-            System.out.println("The score for " + name + " is " + playerScore);
+            computerScore++;
         } else {
             System.out.println("The War Is A Tie");
-            System.out.println("The score for computer is: " + computerScore);
-            System.out.println("The score for " + name + " is: " + playerScore);
-        }  
+        }
+        
+        System.out.println("The score for computer is: " + computerScore);
+        System.out.println("The score for " + name + " is: " + playerScore);
     }
-    }
+}
     
-    //print hand method
-     public static void printHand(Card[][] hand) {
-
-    for (int card = 0; card < hand.length; card++)
-        System.out.printf("%s", hand[card].toString());
-    } 
-
+    //printHand method prints the card using toString
+    public static void printHand(Card[][] hands) {
+    for (int player = 0; player < hands.length; player++) {
+        for (int card = 0; card < hands[player].length; card++) {
+            System.out.print(hands[player][card].toString() + " ");
+        }
+        
+        System.out.println();
+    }
+}
+    
     //end game method
-    public void endGame(String input, String name){
-      if(input.toLowerCase().equals("y")){
-          System.out.print("The game will now be played");
-          divideHand(name);
+    public void endGame(Scanner input, String startInput, String name){
+        
+        String endInput = "";
+        
+        if(playerScore > computerScore){
+            System.out.print("\n" + name + " wins with a score of: " +
+                    playerScore);
+        }else{
+            System.out.print("\nComputer wins with a score of: " + 
+                    computerScore);
+        }
+        
+        if(startInput.toLowerCase().equals("y")){
+         System.out.print("\nContinue playing? (Y/n): ");
+        endInput = input.nextLine();
+        }
+        
+      if(endInput.toLowerCase().equals("y")){
+          System.out.print("\nThe game will now be continued if confirmed..\n");
+          startGame(input, name); //Passes into startGame method
       }else{
-          System.out.print("Terminating the game..");
+          System.out.print("\nInvalid input. Terminating the game..!\n");
           
       }
     }
     
     //start game method
-    public void startGame(String input, String name){
-     if(input.toLowerCase().equals("y")){
-          System.out.print("The game will now be played");
+    public void startGame(Scanner input, String name){
+        
+          System.out.print("\nStart the game? (Y/n): ");
+        String startInput = input.nextLine();
+        
+     if(startInput.toLowerCase().equals("y")){
+          System.out.print("Game starting up..\n");
           divideHand(name);
+          endGame(input, startInput, name);
       }else{
-          System.out.print("Terminating the game..");
+          System.out.print("\nInvalid input. Terminating the game..");
           
       }
     }
     
-    }
+}
+    
 
 

@@ -22,18 +22,8 @@ public class WarGame {
         System.out.print("Enter your name: ");
         String name = input.nextLine();
 
-        
-        System.out.print("\nStart the game? (Y/N): ");
-        String startInput = input.nextLine();
-        playGame.startGame(startInput, name);
-        
-   
-        if(startInput.equals("y")){
-         System.out.print("\nPlay again??? (Y/N): ");
-        String endInput = input.nextLine();
-        playGame.endGame(endInput, name);
-        
-        }
+        //Passes into the playGame start method
+        playGame.startGame(input, name);
        
 }
 }

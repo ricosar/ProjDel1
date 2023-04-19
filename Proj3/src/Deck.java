@@ -9,9 +9,13 @@
  */
 public class Deck {
 
+    //array of 52 cards in the deck
     private Card[] deck = new Card[52];
+    
+    //topCard datafield
     private int topCard;
 
+    //Deck constructor
     Deck() {
 
         topCard = 0;
@@ -26,6 +30,7 @@ public class Deck {
 
         topCard = 0;
 
+        //shuffles the deck using Math.random
         for (int i = 0; i < 1000; i++) {
             int j = (int)(Math.random()*52);
             int k = (int)(Math.random()*52);
@@ -35,6 +40,7 @@ public class Deck {
         } 
    }
 
+    //deals the card to the players
     public Card dealCard() {
         Card theCard;
         if (topCard < deck.length) {
