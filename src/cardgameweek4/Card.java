@@ -1,51 +1,55 @@
 package cardgameweek4;
 
+import java.util.ArrayList;
+
 /**
  * Starter code for the Card class. To be used in Week 4.
  *
- * @author dancye, 2019
- * @modified Paul Bonenfant Feb 2022
+ * @Max Matthews
  */
+
+
 public class Card {
-
-   private String suit; 
-   private String playerName;
-
-   public Card(String newSuit, String newPlayerName){
-       setSuit(newSuit);
-       setPlayerName(newPlayerName);
+     
+    //datafields
+    private int cardNum;
     
-   }
-   public Card(){
-       this("","");
-   }
-    /**
-     * @return the suit
-     */
-    public String getSuit() {
-        return suit;
-    }
-
-    /**
-     * @param suit the suit to set
-     */
-    public void setSuit(String suit) {
-        this.suit = suit;
-    }
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    /**
-     * @param suit the suit to set
-     */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    /**
-     * @return the value
-     */
-  
-}
-
+    //arrays that hold suits and ranks
+    final static String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
+    final static String[] ranks = {"2", "3","4","5","6","7","8", "9","10", "Jack", "Queen", "King", "Ace"};
+ 
+    //Card constructor
+     Card (int theCard) {
+         setCardNum (theCard);
+     }
+ 
+    //sets the card
+     public void setCardNum (int theCard) {
+         cardNum = (theCard >= 0 && theCard <= 51)? theCard: 0;
+     }
+ 
+    //returns the card num
+     public int getCardNum() {
+         return cardNum;
+     }
+ 
+    //toString method
+     public String toString() {
+         return ranks[cardNum%13] + " of " + suits[cardNum/13];
+     }
+ 
+    //returns the suit
+     public String getSuit() {
+         return suits[cardNum/13];
+     }
+ 
+    //returns the rank
+     public String getRank() {
+         return ranks[cardNum%13];
+     }
+ 
+    //returns the value
+     public int getValue() {
+         return cardNum%13;
+     } 
+ }
